@@ -224,14 +224,22 @@ class TableSegment:
     @property
     def _relevant_columns_repr(self) -> List[Expr]:
         return [NormalizeAsString(this[c]) for c in self.relevant_columns]
-    
+
     def sum_column(self, column: str):
         """sum of a column in the segment, in one pass."""
-        return self.database.query(self.make_select().select(sum_(column)), int)
+        return self.database.query(self.make_select().select(sum_(column)), float)
+
+    def sum_column_with_condition(self, column: str, condition: str):
+        """sum of a column in the segment, in one pass."""
+        return self.database.query(self.make_select().select(sum_(column)).where(condition), float)
 
     def count(self) -> int:
         """Count how many rows are in the segment, in one pass."""
         return self.database.query(self.make_select().select(Count()), int)
+
+    def count_with_condition(self, condition: str) -> int:
+        """Count how many rows are in the segment, in one pass."""
+        return self.database.query(self.make_select().select(Count()).where(condition), int)
 
     def count_and_checksum(self) -> Tuple[int, int]:
         """Count and checksum the rows in the segment, in one pass."""

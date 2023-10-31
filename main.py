@@ -30,10 +30,12 @@ result2 = data_diff.diff_tables(
 print(f"Number of differnt records following varchar: {len(list(result2))}")
 
 
-# table3 = data_diff.connect_to_table(
-#     "oracle://dbzuser:dbz@10.159.19.101:1521/pdbdev",
-#     table_name=("dbzuser.user_table"),
-#     key_columns="user_id"
-# )
+table3 = data_diff.connect_to_table(
+    "oracle://dbzuser:dbz@10.159.19.101:1521/pdbdev",
+    table_name=("dbzuser.user_table"),
+    key_columns="user_id"
+)
 
-# print(table3.sum_column("test_addcol"))
+# print(table3.count_with_condition("test_addcol > 10 and test_addcol < 200"))
+print(table3.sum_column_with_condition("test_addcol", "test_addcol > 10 and test_addcol < 200"))
+print(table3.get_schema())
