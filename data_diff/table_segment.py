@@ -12,7 +12,7 @@ from data_diff.databases.base import Database
 from data_diff.abcs.database_types import DbPath, DbKey, DbTime
 from data_diff.schema import Schema, create_schema
 from data_diff.queries.extras import Checksum
-from data_diff.queries.api import Count, SKIP, table, this, Expr, min_, max_, Code
+from data_diff.queries.api import Count, SKIP, table, this, Expr, min_, max_, Code, sum_
 from data_diff.queries.extras import ApplyFuncAndNormalizeAsString, NormalizeAsString
 
 logger = logging.getLogger("table_segment")
@@ -224,6 +224,10 @@ class TableSegment:
     @property
     def _relevant_columns_repr(self) -> List[Expr]:
         return [NormalizeAsString(this[c]) for c in self.relevant_columns]
+    
+    def sum_column(self, column: str):
+        """sum of a column in the segment, in one pass."""
+        return self.database.query(self.make_select().select(sum_(column)), int)
 
     def count(self) -> int:
         """Count how many rows are in the segment, in one pass."""

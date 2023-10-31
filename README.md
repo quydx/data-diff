@@ -24,6 +24,43 @@ Test SQL code and preview changes by comparing development/staging environment d
 2. Run the SQL code to create a new dataset
 3. Compare the dataset with its production version or another iteration
 
+### Python API
+```
+import data_diff
+
+table1 = data_diff.connect_to_table(
+    "trino://admin@10.159.19.101:8080/iceberg_hms/default", 
+    table_name=("postgres121vietpq__kafka_hudi_test_test_user"),
+)
+print(f"Total record table1: {table1.count()}")
+
+print(table1.sum_column("test_addcol"))
+
+table2 = data_diff.connect_to_table(
+    "postgresql://postgres:changeme@10.159.19.121:5431/test", 
+    table_name=("kafka_hudi_test.test_user"),
+)
+print(f"Total record table2: {table2.count()}")
+
+
+result1 = data_diff.diff_tables(
+    table1=table1, table2=table2,
+    key_columns=[("test_addcol")],
+    extra_columns=["name", "user_id"],
+    algorithm="hashdiff"
+)
+print(f"Number of differnt records following int: {len(list(result1))}")
+
+
+result2 = data_diff.diff_tables(
+    table1=table1, table2=table2,
+    key_columns=[("user_id")],
+    extra_columns=["name", "test_addcol"],
+    algorithm="hashdiff"
+)
+
+print(f"Number of differnt records following varchar: {len(list(result2))}")
+```
   <p align="left">
   <img alt="dbt" src="https://seeklogo.com/images/D/dbt-logo-E4B0ED72A2-seeklogo.com.png" width="10%" />
   </p>

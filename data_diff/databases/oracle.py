@@ -182,6 +182,7 @@ class Oracle(ThreadedDatabase):
 
     def _query_cursor(self, c, sql_code: str):
         try:
+            sql_code = sql_code.replace('"', "").upper()
             return super()._query_cursor(c, sql_code)
         except self._oracle.DatabaseError as e:
             raise QueryError(e)
