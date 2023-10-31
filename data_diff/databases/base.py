@@ -936,8 +936,6 @@ class Database(abc.ABC):
             if answer.lower() not in ["y", "yes"]:
                 sys.exit(1)
 
-        if "sum" in sql_code and sql_code.count("'") == 2:
-            sql_code = sql_code.replace("'", "")
         res = self._query(sql_code)
         if res_type is list:
             return list(res)
