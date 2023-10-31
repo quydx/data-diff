@@ -231,7 +231,7 @@ class BaseDialect(abc.ABC):
         elif isinstance(elem, ColType):
             return self.render_coltype(attrs.evolve(compiler, root=False), elem)
         elif isinstance(elem, str):
-            return f"'{elem}'"
+            return f'"{elem}"'
         elif isinstance(elem, (int, float)):
             return str(elem)
         elif isinstance(elem, datetime):
@@ -936,7 +936,7 @@ class Database(abc.ABC):
             if answer.lower() not in ["y", "yes"]:
                 sys.exit(1)
 
-        if "sum" in sql_code and sql_code.count("'") == 2: 
+        if "sum" in sql_code and sql_code.count("'") == 2:
             sql_code = sql_code.replace("'", "")
         res = self._query(sql_code)
         if res_type is list:
