@@ -204,9 +204,14 @@ class HashDiffer(TableDiffer):
         # This saves time, as bisection speed is limited by ping and query performance.
         if self.bisection_disabled or max_rows < self.bisection_threshold or max_space_size < self.bisection_factor * 2:
             rows1, rows2 = self._threaded_call("get_values", [table1, table2])
+
+            extra_columns = [column for column in table1.extra_columns]
+            if table1.database_type == "Oracle":
+                extra_columns = [column.upper() for column in table1.extra_columns]
+
             json_cols = {
                 i: colname
-                for i, colname in enumerate(table1.extra_columns)
+                for i, colname in enumerate(extra_columns)
                 if isinstance(table1._schema[colname], JSON)
             }
             diff = list(diff_sets(rows1, rows2, json_cols))

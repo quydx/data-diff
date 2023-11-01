@@ -104,6 +104,10 @@ class CaseInsensitiveDict(CaseAwareMapping):
 
 class CaseSensitiveDict(dict, CaseAwareMapping):
     def get_key(self, key):
+        if key not in self:
+            key = key.upper()
+            if key in self:
+                return key
         self[key]  # Throw KeyError if key doesn't exist
         return key
 

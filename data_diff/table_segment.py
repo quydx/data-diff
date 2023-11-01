@@ -137,6 +137,10 @@ class TableSegment:
                 f"Error: min_update expected to be smaller than max_update! ({self.min_update} >= {self.max_update})"
             )
 
+    @property
+    def database_type(self):
+        return self.database.name
+
     def _where(self):
         return f"({self.where})" if self.where else None
 
@@ -219,7 +223,11 @@ class TableSegment:
         if self.update_column and self.update_column not in extras:
             extras = [self.update_column] + extras
 
-        return list(self.key_columns) + extras
+        columns = list(self.key_columns) + extras
+        if self.database_type == 'Oracle':
+            columns = [column.upper() for column in columns]
+
+        return columns
 
     @property
     def _relevant_columns_repr(self) -> List[Expr]:
