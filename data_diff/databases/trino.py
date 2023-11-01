@@ -47,7 +47,7 @@ class Trino(presto.Presto):
         if kw.get("schema"):
             self.default_schema = kw.get("schema")
 
-        if kw.get("password"):
+        if kw.get("auth") == "basic":
             kw["auth"] = trino.auth.BasicAuthentication(kw["user"], kw.pop("password"))
             kw["http_scheme"] = "https"
             kw["verify"] = False

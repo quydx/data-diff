@@ -146,7 +146,6 @@ def diff_tables(
         ).items()
         if v is not None
     }
-
     segments = [t.new(**override_attrs) for t in tables] if override_attrs else tables
 
     algorithm = Algorithm(algorithm)
