@@ -271,9 +271,9 @@ class TableDiffer(ThreadBase, ABC):
         key_columns1 = [key for key in table1.key_columns]
         key_columns2 = [key for key in table2.key_columns]
         if table1.database_type == 'Oracle':
-            key_columns1 = [key.upper() for key in table1.key_columns]
+            key_columns1 = [key.upper() for key in key_columns1]
         if table2.database_type == 'Oracle':
-            key_columns2 = [key.upper() for key in table2.key_columns]
+            key_columns2 = [key.upper() for key in key_columns2]
 
         key_types1 = [table1._schema[i] for i in key_columns1]
         key_types2 = [table2._schema[i] for i in key_columns2]
