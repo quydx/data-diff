@@ -268,12 +268,15 @@ class TableDiffer(ThreadBase, ABC):
         if len(table1.key_columns) != len(table2.key_columns):
             raise ValueError("Tables should have an equivalent number of key columns!")
 
-        key_columns = [key for key in table1.key_columns]
+        key_columns1 = [key for key in table1.key_columns]
+        key_columns2 = [key for key in table2.key_columns]
         if table1.database_type == 'Oracle':
-            key_columns = [key.upper() for key in table1.key_columns]
+            key_columns1 = [key.upper() for key in table1.key_columns]
+        if table2.database_type == 'Oracle':
+            key_columns2 = [key.upper() for key in table2.key_columns]
 
-        key_types1 = [table1._schema[i] for i in key_columns]
-        key_types2 = [table2._schema[i] for i in key_columns]
+        key_types1 = [table1._schema[i] for i in key_columns1]
+        key_types2 = [table2._schema[i] for i in key_columns2]
 
         for kt in key_types1 + key_types2:
             if not isinstance(kt, IKey):

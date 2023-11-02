@@ -613,7 +613,6 @@ class Select(ExprNode, ITable, Root):
                     pass
                 else:
                     raise ValueError(k)
-
         return attrs.evolve(table, **kwargs)
 
 

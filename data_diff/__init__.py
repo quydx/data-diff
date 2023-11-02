@@ -37,6 +37,9 @@ def connect_to_table(
     if isinstance(table_name, str):
         table_name = db.dialect.parse_table_name(table_name)
 
+    database_type = db_info.split(":")[0]
+    if database_type.lower() == "oracle":
+        table_name = [elem.upper() for elem in table_name]
     return TableSegment(db, table_name, key_columns, **kwargs)
 
 
