@@ -21,7 +21,7 @@ classifiers = [
 ]
 packages = [{ include = "data_diff" }]
 [tool.poetry.dependencies]
-pydantic = "2.5.0"
+pydantic = "2.4.1"
 python = "^3.8.0"
 dsnparse = "<0.2.0"
 click = "^8.1"
