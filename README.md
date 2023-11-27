@@ -166,7 +166,7 @@ Check out [documentation](https://docs.datafold.com/reference/open_source/cli) f
 | Oracle        |  🟡   | `oracle://<username>:<password>@<hostname>/servive_or_sid`                                                                          |
 | Presto        |  🟡   | `presto://<username>:<password>@<hostname>:8080/<database>`                                                                         |
 | Databricks    |  🟡   | `databricks://<http_path>:<access_token>@<server_hostname>/<catalog>/<schema>`                                                      |
-| Trino         |  🟡   | `trino://<username>:<password>@<hostname>:8080/<database>`                                                                          |
+| Trino         |  🟡   | `trino://<username>@<hostname>:8080/<database>` `trino://<username>:<password>@<hostname>:8080/<database>?auth=basic`                                                           |                
 | Clickhouse    |  🟡   | `clickhouse://<username>:<password>@<hostname>:9000/<database>`                                                                     |
 | Vertica       |  🟡   | `vertica://<username>:<password>@<hostname>:5433/<database>`                                                                        |
 | ElasticSearch |  📝    |                                                                                                                                     |
